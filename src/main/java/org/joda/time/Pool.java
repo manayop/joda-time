@@ -4,13 +4,13 @@ import java.util.HashMap;
 
 public class Pool {
 
-    static final int YEAR = 1;
-    static final int MONTH = 2;
-    static final int WEEK = 3;
-    static final int DAY = 4;
-    static final int HOUR = 5;
-    static final int MINUTE = 6;
-    static final int SECOND = 7;
+    private static final int YEAR = 1;
+    private static final int MONTH = 2;
+    private static final int WEEK = 3;
+    private static final int DAY = 4;
+    private static final int HOUR = 5;
+    private static final int MINUTE = 6;
+    private static final int SECOND = 7;
 
 
     private static Pool myInstance;
