@@ -124,27 +124,23 @@ public class Pool {
 
     private void addObject(int type, int numeral, Object object) {
 
-        Integer myType = new Integer(type);
-
-        HashMap<Integer, Object> typePool = flexiblePool.get(myType);
+        HashMap<Integer, Object> typePool = flexiblePool.get(type);
         if (null == typePool){
             typePool = new HashMap<Integer, Object>();
-            flexiblePool.put(myType,typePool);
+            flexiblePool.put(type,typePool);
         }
 
-        typePool.put(new Integer(numeral),object);
+        typePool.put(numeral,object);
     }
 
     private Object getObject(int type, int numeral) {
 
-        Integer myType = new Integer(type);
-
-        HashMap<Integer, Object> typePool = flexiblePool.get(myType);
+        HashMap<Integer, Object> typePool = flexiblePool.get(type);
         if (null == typePool){
             return null;
         }
 
-        Object instance = typePool.get(new Integer(numeral));
+        Object instance = typePool.get(numeral);
 
         return instance;
     }
