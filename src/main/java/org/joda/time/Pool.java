@@ -140,9 +140,7 @@ public class Pool {
             return null;
         }
 
-        Object instance = typePool.get(numeral);
-
-        return instance;
+        return typePool.get(numeral);
     }
 
     private void addYears(int numeral, Years year) {
