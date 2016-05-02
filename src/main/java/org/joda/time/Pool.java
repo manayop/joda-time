@@ -4,24 +4,20 @@ import java.util.HashMap;
 
 public class Pool {
 
-    private static Pool myInstance;
-    private HashMap<Integer, Years> years;
-    private HashMap<Integer, Months> months;
-    private HashMap<Integer, Weeks> weeks;
-    private HashMap<Integer, Days> days;
-    private HashMap<Integer, Hours> hours;
-    private HashMap<Integer, Minutes> minutes;
-    private HashMap<Integer, Seconds> seconds;
+    static final int YEAR = 1;
+    static final int MONTH = 2;
+    static final int WEEK = 3;
+    static final int DAY = 4;
+    static final int HOUR = 5;
+    static final int MINUTE = 6;
+    static final int SECOND = 7;
 
+
+    private static Pool myInstance;
+    private HashMap<Integer, HashMap<Integer, Object>> flexiblePool;
 
     private Pool() {
-        this.years = new HashMap<Integer, Years>();
-        this.months = new HashMap<Integer, Months>();
-        this.weeks = new HashMap<Integer, Weeks>();
-        this.days = new HashMap<Integer, Days>();
-        this.hours = new HashMap<Integer, Hours>();
-        this.minutes = new HashMap<Integer, Minutes>();
-        this.seconds = new HashMap<Integer, Seconds>();
+        this.flexiblePool = new HashMap<Integer, HashMap<Integer, Object>>();
     }
 
     public static Pool getInstance() {
@@ -126,73 +122,86 @@ public class Pool {
         return (Minutes) result;
     }
 
+    private void addObject(int type, int numeral, Object object) {
+
+        Integer myType = new Integer(type);
+
+        HashMap<Integer, Object> typePool = flexiblePool.get(myType);
+        if (null == typePool){
+            typePool = new HashMap<Integer, Object>();
+            flexiblePool.put(myType,typePool);
+        }
+
+        typePool.put(new Integer(numeral),object);
+    }
+
+    private Object getObject(int type, int numeral) {
+
+        Integer myType = new Integer(type);
+
+        HashMap<Integer, Object> typePool = flexiblePool.get(myType);
+        if (null == typePool){
+            return null;
+        }
+
+        Object instance = typePool.get(new Integer(numeral));
+
+        return instance;
+    }
+
     private void addYears(int numeral, Years year) {
-        years.put(new Integer(numeral), year);
+        addObject(YEAR, numeral, year);
     }
 
     private void addMonths(int numeral, Months month) {
-        months.put(new Integer(numeral), month);
+        addObject(MONTH, numeral, month);
     }
     private void addWeeks(int numeral, Weeks week) {
-        weeks.put(new Integer(numeral), week);
+        addObject(WEEK, numeral, week);
     }
-    
+
     private void addDay(int numeral, Days day) {
-        days.put(new Integer(numeral), day);
+        addObject(DAY, numeral, day);
     }
 
     private void addHours(int numeral, Hours hour) {
-        hours.put(new Integer(numeral), hour);
+        addObject(HOUR, numeral, hour);
     }
 
     private void addSeconds(int numeral, Seconds second) {
-        seconds.put(new Integer(numeral), second);
+        addObject(SECOND, numeral, second);
     }
 
-
     private void addMinutes(int numeral, Minutes minute) {
-        minutes.put(new Integer(numeral), minute);
+        addObject(MINUTE, numeral, minute);
     }
 
     private Object getYears(int numeral){
-        Object instance = years.get(new Integer(numeral));
-
-        return instance;
+        return getObject(YEAR,numeral);
     }
 
     private Object getMonths(int numeral){
-        Object instance = months.get(new Integer(numeral));
-
-        return instance;
+        return getObject(MONTH,numeral);
     }
-    private Object getWeeks(int numeral){
-        Object instance = weeks.get(new Integer(numeral));
 
-        return instance;
+    private Object getWeeks(int numeral){
+        return getObject(WEEK,numeral);
     }
 
     private Object getDays(int numeral){
-        Object instance = days.get(new Integer(numeral));
-
-        return instance;
+        return getObject(DAY,numeral);
     }
 
     private Object getHours(int numeral) {
-        Object instance = hours.get(new Integer(numeral));
-
-        return instance;
+        return getObject(HOUR,numeral);
     }
 
     private Object getMinutes(int numeral) {
-        Object instance = minutes.get(new Integer(numeral));
-
-        return instance;
+        return getObject(MINUTE,numeral);
     }
 
     private Object getSeconds(int numeral) {
-        Object instance = seconds.get(new Integer(numeral));
-
-        return instance;
+        return getObject(SECOND,numeral);
     }
 
 
