@@ -109,24 +109,8 @@ public abstract class DateTimeZone implements Serializable {
     /** Maximum offset. */
     private static final int MAX_MILLIS = (86400 * 1000) - 1;
 
-    /**
-     * The instance that is providing time zones.
-     * This is lazily initialized to reduce risks of race conditions at startup.
-     */
-    private static final AtomicReference<Provider> cProvider =
-                    new AtomicReference<Provider>();
-    /**
-     * The instance that is providing time zone names.
-     * This is lazily initialized to reduce risks of race conditions at startup.
-     */
-    private static final AtomicReference<NameProvider> cNameProvider =
-                    new AtomicReference<NameProvider>();
-    /**
-     * The default time zone.
-     * This is lazily initialized to reduce risks of race conditions at startup.
-     */
-    private static final AtomicReference<DateTimeZone> cDefault =
-                    new AtomicReference<DateTimeZone>();
+    private static final AtomicReferenceMap cMap = new AtomicReferenceMap();
+
 
     //-----------------------------------------------------------------------
     /**
@@ -142,7 +126,7 @@ public abstract class DateTimeZone implements Serializable {
      * @return the default datetime zone object
      */
     public static DateTimeZone getDefault() {
-        DateTimeZone zone = cDefault.get();
+        DateTimeZone zone = cMap.getDefault();
         if (zone == null) {
             try {
                 try {
@@ -162,8 +146,8 @@ public abstract class DateTimeZone implements Serializable {
             if (zone == null) {
                 zone = UTC;
             }
-            if (!cDefault.compareAndSet(null, zone)) {
-                zone = cDefault.get();
+            if (!cMap.compareAndSetDefault(null, zone)) {
+                zone = cMap.getDefault();
             }
         }
         return zone;
@@ -186,7 +170,7 @@ public abstract class DateTimeZone implements Serializable {
         if (zone == null) {
             throw new IllegalArgumentException("The datetime zone must not be null");
         }
-        cDefault.set(zone);
+        cMap.setDefault(zone);
     }
 
     //-----------------------------------------------------------------------
@@ -408,11 +392,11 @@ public abstract class DateTimeZone implements Serializable {
      * @return the provider
      */
     public static Provider getProvider() {
-        Provider provider = cProvider.get();
+        Provider provider = cMap.getProvider();
         if (provider == null) {
             provider = getDefaultProvider();
-            if (!cProvider.compareAndSet(null, provider)) {
-                provider = cProvider.get();
+            if (!cMap.compareAndSetProvider(null, provider)) {
+                provider = cMap.getProvider();
             }
         }
         return provider;
@@ -438,7 +422,7 @@ public abstract class DateTimeZone implements Serializable {
         } else {
             validateProvider(provider);
         }
-        cProvider.set(provider);
+        cMap.setProvider(provider);
     }
 
     /**
@@ -530,11 +514,11 @@ public abstract class DateTimeZone implements Serializable {
      * @return the provider
      */
     public static NameProvider getNameProvider() {
-        NameProvider nameProvider = cNameProvider.get();
+        NameProvider nameProvider = cMap.getNameProvider();
         if (nameProvider == null) {
             nameProvider = getDefaultNameProvider();
-            if (!cNameProvider.compareAndSet(null, nameProvider)) {
-                nameProvider = cNameProvider.get();
+            if (!cMap.compareAndSetNameProvider(null, nameProvider)) {
+                nameProvider = cMap.getNameProvider();
             }
         }
         return nameProvider;
@@ -558,7 +542,7 @@ public abstract class DateTimeZone implements Serializable {
         if (nameProvider == null) {
             nameProvider = getDefaultNameProvider();
         }
-        cNameProvider.set(nameProvider);
+        cMap.setNameProvider(nameProvider);
     }
 
     /**
