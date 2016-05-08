@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Created by manayop on 9/05/16.
  */
-public class AtomicReferenceMap {
+public class DateTimeZoneDataMap {
 
     private static final int DEFAULT = 1;
     private static final int PROVIDER = 2;
@@ -17,7 +17,7 @@ public class AtomicReferenceMap {
 
     private HashMap<Integer, AtomicReference> map;
 
-    public AtomicReferenceMap() {
+    public DateTimeZoneDataMap() {
         map = new HashMap<Integer, AtomicReference>();
         map.put(DEFAULT,new AtomicReference<DateTimeZone>());
         map.put(PROVIDER, new AtomicReference<Provider>());

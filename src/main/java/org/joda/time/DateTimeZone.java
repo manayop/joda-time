@@ -27,7 +27,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.joda.convert.FromString;
 import org.joda.convert.ToString;
@@ -109,7 +108,7 @@ public abstract class DateTimeZone implements Serializable {
     /** Maximum offset. */
     private static final int MAX_MILLIS = (86400 * 1000) - 1;
 
-    private static final AtomicReferenceMap cMap = new AtomicReferenceMap();
+    private static final DateTimeZoneDataMap cMap = new DateTimeZoneDataMap();
 
 
     //-----------------------------------------------------------------------
