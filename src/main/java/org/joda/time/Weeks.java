@@ -42,17 +42,17 @@ import org.joda.time.format.PeriodFormatter;
 public final class Weeks extends BaseSingleFieldPeriod {
 
     /** Constant representing zero weeks. */
-    public static final Weeks ZERO = Pool.retrieveWeeks(0);
+    public static final Weeks ZERO = (Weeks) BaseSingleFieldPeriodPool.retrieve(Weeks.class,0);
     /** Constant representing one week. */
-    public static final Weeks ONE = Pool.retrieveWeeks(1);
+    public static final Weeks ONE = (Weeks) BaseSingleFieldPeriodPool.retrieve(Weeks.class,1);
     /** Constant representing two weeks. */
-    public static final Weeks TWO = Pool.retrieveWeeks(2);
+    public static final Weeks TWO = (Weeks) BaseSingleFieldPeriodPool.retrieve(Weeks.class,2);
     /** Constant representing three weeks. */
-    public static final Weeks THREE = Pool.retrieveWeeks(3);
+    public static final Weeks THREE = (Weeks) BaseSingleFieldPeriodPool.retrieve(Weeks.class,3);
     /** Constant representing the maximum number of weeks that can be stored in this object. */
-    public static final Weeks MAX_VALUE = Pool.retrieveWeeks(Integer.MAX_VALUE);
+    public static final Weeks MAX_VALUE = (Weeks) BaseSingleFieldPeriodPool.retrieve(Weeks.class,Integer.MAX_VALUE);
     /** Constant representing the minimum number of weeks that can be stored in this object. */
-    public static final Weeks MIN_VALUE = Pool.retrieveWeeks(Integer.MIN_VALUE);
+    public static final Weeks MIN_VALUE = (Weeks) BaseSingleFieldPeriodPool.retrieve(Weeks.class,Integer.MIN_VALUE);
 
     /** The paser to use for this class. */
     private static final PeriodFormatter PARSER = ISOPeriodFormat.standard().withParseType(PeriodType.weeks());
@@ -69,7 +69,7 @@ public final class Weeks extends BaseSingleFieldPeriod {
      * @return the instance of Weeks
      */
     public static Weeks weeks(int weeks) {
-        return Pool.retrieveWeeks(weeks);
+        return (Weeks) BaseSingleFieldPeriodPool.retrieve(Weeks.class,weeks);
     }
 
     //-----------------------------------------------------------------------
